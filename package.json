@@ -19,6 +19,7 @@
     "@services": "dist/services",
     "@routes": "dist/routes",
     "@models": "dist/models",
+    "@middleware": "dist/middleware",
     "@utils": "dist/utils"
   },
   "dependencies": {

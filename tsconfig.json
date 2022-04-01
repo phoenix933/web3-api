@@ -81,6 +81,9 @@
       "@models/*": [
         "src/models/*"
       ],
+      "@middleware/*": [
+        "src/middleware/*"
+      ],
       "@utils/*": [
         "src/utils/*"
       ]
