@@ -1,6 +1,6 @@
 // mockDB
 function initDatabase() {
-  let walletMap: Map<string, { address: string; chainId: number }> = new Map(
+  const walletMap: Map<string, { address: string; chainId: number }> = new Map(
     []
   );
 
