@@ -1,6 +1,5 @@
 import { Request, Response, Router } from "express";
 import axios from "axios";
-import { postsService } from "@services/posts";
 
 const router = Router();
 
@@ -23,12 +22,7 @@ router.get(
 
     const { data } = await axios.get(url);
 
-    const posts = postsService.getAll();
-
-    return res.status(200).json({
-      ...data,
-      posts,
-    });
+    return res.status(200).json(data);
   }
 );
 
