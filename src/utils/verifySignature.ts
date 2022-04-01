@@ -1,7 +1,7 @@
 import type { ChainData } from "@models/ChainData";
 import * as ethUtil from "ethereumjs-util";
 import { providers } from "ethers";
-import { eip1271 } from "../routes/eip1271";
+import { eip1271 } from "@utils/eip1271";
 import { SUPPORTED_CHAINS } from "@shared/constants"
 
 function recoverAddress(sig: string, hash: string): string {
