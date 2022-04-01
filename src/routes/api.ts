@@ -1,15 +1,22 @@
-import { Router } from 'express';
-import nftRouter from './nft-router';
-import postRouter from './post-router';
-import walletRouter from './wallet-router';
+import { Request, Response, NextFunction, Router } from "express";
+import chainRouter from "./chain-router";
+import walletRouter from "./wallet-router";
 
 // Export the base-router
 const baseRouter = Router();
 
-// Setup routers
-baseRouter.use('/nfts', nftRouter);
-baseRouter.use('/posts', postRouter);
-baseRouter.use('/wallets', walletRouter);
+const checkChain = (req: Request, res: Response, next: NextFunction) => {
+  const { chain } = req.params;
+
+  if (chain !== "eth") {
+    return res.status(400).json({ message: "Unsupported chain" });
+  }
+
+  next();
+};
+
+baseRouter.use("/wallets", walletRouter);
+baseRouter.use("/:chain", checkChain, chainRouter);
 
 // Export default.
 export default baseRouter;
