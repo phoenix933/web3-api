@@ -317,7 +317,7 @@ function getChainData(chainId: number): ChainData {
     throw new Error("ChainId missing or not supported");
   }
 
-  const API_KEY = "ff77cae3f7d3479b9608a9fb0e9159e1"; // process.env.REACT_APP_INFURA_PROJECT_ID;
+  const API_KEY = process.env.INFURA_API_KEY;
 
   if (
     chainData.rpc_url.includes("infura.io") &&
