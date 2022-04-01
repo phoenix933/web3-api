@@ -17,6 +17,7 @@
     "@shared": "dist/shared",
     "@server": "dist/server",
     "@routes": "dist/routes",
+    "@models": "dist/models",
     "@utils": "dist/utils"
   },
   "dependencies": {
