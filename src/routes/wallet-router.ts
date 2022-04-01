@@ -1,29 +1,9 @@
 import { Request, Response, Router } from "express";
-import * as ethUtil from "ethereumjs-util";
-import { convertUtf8ToHex } from "@walletconnect/utils";
+import { hashMessage } from "@utils/hashMessage";
 import { verifySignature } from "@utils/verifySignature";
 
 // Constants
 const router = Router();
-
-function encodePersonalMessage(msg: string): string {
-  const data = ethUtil.toBuffer(convertUtf8ToHex(msg));
-  const buf = Buffer.concat([
-    Buffer.from(
-      "\u0019Ethereum Signed Message:\n" + data.length.toString(),
-      "utf8"
-    ),
-    data,
-  ]);
-  return ethUtil.bufferToHex(buf);
-}
-
-function hashMessage(msg: string): string {
-  const data = encodePersonalMessage(msg);
-  const buf = ethUtil.toBuffer(data);
-  const hash = ethUtil.keccak256(buf);
-  return ethUtil.bufferToHex(hash);
-}
 
 // mockDB
 function initDatabase() {
@@ -56,10 +36,10 @@ function initDatabase() {
   };
 }
 
-const db = initDatabase()
+const db = initDatabase();
 
 router.get("/", async (req: Request, res: Response) => {
-  const wallets = db.getAll()
+  const wallets = db.getAll();
 
   return res.status(200).json({ wallets });
 });
@@ -70,8 +50,11 @@ router.post("/:address", async (req: Request, res: Response) => {
 
   if ([address, signature, chainId, message].includes(undefined)) {
     console.log({
-      address, signature, chainId, message
-    })
+      address,
+      signature,
+      chainId,
+      message,
+    });
     return res.status(400).json({ message: "Invalid data" });
   }
 
@@ -79,7 +62,7 @@ router.post("/:address", async (req: Request, res: Response) => {
   const valid = await verifySignature(address, signature, hash, chainId);
 
   if (valid) {
-    db.add(address, chainId)
+    db.add(address, chainId);
   }
 
   return res.status(200).json({ valid });
@@ -88,7 +71,7 @@ router.post("/:address", async (req: Request, res: Response) => {
 router.delete("/:address", async (req: Request, res: Response) => {
   const { address } = req.params;
 
-  db.remove(address)
+  db.remove(address);
 
   return res.status(200).json({ success: true });
 });
