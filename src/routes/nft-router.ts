@@ -13,6 +13,7 @@ router.get(
 
     const url = `${API_URL}/asset/${contractAddress}/${tokenId}`;
 
+    // Prevent OpenSea's Testnet API's from throwing a "Too many requests" error
     await wait(500);
 
     const { data } = await axios.get(url);
@@ -26,6 +27,7 @@ router.get("/", async (req: Request, res: Response) => {
 
   const url = `${API_URL}/assets?collection=${collection}`;
 
+  // Prevent OpenSea's Testnet API's from throwing a "Too many requests" error
   await wait(1000);
 
   const { data } = await axios.get(url);
