@@ -16,6 +16,7 @@
   "_moduleAliases": {
     "@shared": "dist/shared",
     "@server": "dist/server",
+    "@services": "dist/services",
     "@routes": "dist/routes",
     "@models": "dist/models",
     "@utils": "dist/utils"
