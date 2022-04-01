@@ -5,7 +5,11 @@ import { walletsService } from "@services/wallets";
 
 const router = Router();
 
+// ⚠️ IMPORTANT ⚠️
+// All of these endpoints should perform operations per user.
+
 router.get("/", async (req: Request, res: Response) => {
+  // Get wallets for user
   const wallets = walletsService.getAll();
 
   return res.status(200).json({ wallets });
@@ -29,6 +33,7 @@ router.post("/:address", async (req: Request, res: Response) => {
   const valid = await verifySignature(address, signature, hash, chainId);
 
   if (valid) {
+    // Save wallet to user's wallets
     walletsService.add(address, chainId);
   }
 
@@ -38,6 +43,7 @@ router.post("/:address", async (req: Request, res: Response) => {
 router.delete("/:address", async (req: Request, res: Response) => {
   const { address } = req.params;
 
+  // Remove wallet from user's wallets
   walletsService.remove(address);
 
   return res.status(200).json({ success: true });
