@@ -1,10 +1,8 @@
 import { Request, Response, Router } from "express";
 import axios from "axios";
 
-// Constants
 const router = Router();
 
-// Add and verify
 router.get("/", async (req: Request, res: Response) => {
   const { owner } = req.query;
 
@@ -15,9 +13,6 @@ router.get("/", async (req: Request, res: Response) => {
   return res.status(200).json(data);
 });
 
-// Delete
-
-// Get wallets
 router.get(
   "/:contractAddress/:tokenId",
   async (req: Request, res: Response) => {

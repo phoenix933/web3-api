@@ -3,7 +3,6 @@ import { hashMessage } from "@utils/hashMessage";
 import { verifySignature } from "@utils/verifySignature";
 import { walletsService } from "@services/wallets";
 
-// Constants
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
@@ -44,5 +43,4 @@ router.delete("/:address", async (req: Request, res: Response) => {
   return res.status(200).json({ success: true });
 });
 
-// Export default
 export default router;
