@@ -66,23 +66,17 @@
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
     "paths": {
-      "@repos/*": [
-        "src/repos/*"
-      ],
-      "@models/*": [
-        "src/models/*"
-      ],
       "@shared/*": [
         "src/shared/*"
       ],
       "@server": [
         "src/server"
       ],
-      "@services/*": [
-        "src/services/*"
-      ],
       "@routes/*": [
         "src/routes/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
       ]
     },
     "useUnknownInCatchVariables": false
