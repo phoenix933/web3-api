@@ -3,10 +3,13 @@ import { walletsService } from "./wallets";
 import { openSeaApi } from "@utils/openSeaApi";
 
 function initService() {
+  const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
+
   // This is obviously not the best way to implement this as there's no separation of concerns.
   // However, this is a mock API so it's a good enough solution.
   const formatAsset = (asset: any, user: User) => {
-    const { owner, creator } = asset;
+    const { creator } = asset;
+    const owner = asset.owner.address === NULL_ADDRESS ? creator : asset.owner;
 
     const isOwner = !!walletsService.getUserWallet(user.id, owner.address);
     const isCreator = !!walletsService.getUserWallet(user.id, creator.address);

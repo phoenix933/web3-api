@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { nftsService } from "@services/nfts";
 import { collectionsService } from "@services/collections";
+import { removeDuplicates } from "@utils/removeDuplicates";
 
 const router = Router();
 
@@ -13,8 +14,18 @@ router.get("/:slug", async (req: Request, res: Response) => {
     res.locals.user
   );
 
+  const owners = removeDuplicates(
+    assets
+      .map((asset: any) => asset.owner)
+      .filter((owner: any) => !!owner.real_user),
+    "address"
+  );
+
   return res.status(200).json({
-    collection,
+    collection: {
+      ...collection,
+      owners,
+    },
     assets,
   });
 });
