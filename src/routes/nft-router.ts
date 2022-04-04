@@ -1,7 +1,5 @@
-import { OPENSEA_API_URL } from "@shared/constants";
 import { Request, Response, Router } from "express";
-import axios from "axios";
-import { wait } from "@utils/wait";
+import { nftsService } from "@services/nfts";
 
 const router = Router();
 
@@ -10,28 +8,29 @@ router.get(
   async (req: Request, res: Response) => {
     const { contractAddress, tokenId } = req.params;
 
-    const url = `${OPENSEA_API_URL}/asset/${contractAddress}/${tokenId}`;
+    const nft = await nftsService.getOne(
+      contractAddress,
+      tokenId,
+      res.locals.user
+    );
 
-    // Prevent OpenSea's Testnet API's from throwing a "Too many requests" error
-    await wait(500);
-
-    const { data } = await axios.get(url);
-
-    return res.status(200).json(data);
+    return res.status(200).json(nft);
   }
 );
 
 router.get("/", async (req: Request, res: Response) => {
   const { collection } = req.query;
 
-  const url = `${OPENSEA_API_URL}/assets?collection=${collection}`;
+  if (!collection) {
+    return res.status(400).json({ message: "Collection is required" });
+  }
 
-  // Prevent OpenSea's Testnet API's from throwing a "Too many requests" error
-  await wait(1000);
+  const nfts = await nftsService.getAllForCollection(
+    collection as string,
+    res.locals.user
+  );
 
-  const { data } = await axios.get(url);
-
-  return res.status(200).json(data);
+  return res.status(200).json(nfts);
 });
 
 export default router;

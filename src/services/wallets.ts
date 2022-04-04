@@ -9,15 +9,15 @@ function initDatabase() {
   };
 
   const getOne = (address: string) => {
-    return walletMap.get(address);
+    return walletMap.get(address.toLowerCase());
   };
 
   const add = (address: string, chainId: number) => {
-    walletMap.set(address, { address, chainId });
+    walletMap.set(address.toLowerCase(), { address, chainId });
   };
 
   const remove = (address: string) => {
-    walletMap.delete(address);
+    walletMap.delete(address.toLowerCase());
   };
 
   return {
@@ -38,6 +38,7 @@ interface Wallet {
 // Ignore the userId as it is a mock
 export const walletsService = {
   getUserWallets: (userId: string) => db.getAll(),
+  getUserWallet: (userId: string, address: string) => db.getOne(address),
   addUserWallet: (userId: string, wallet: Wallet) =>
     db.add(wallet.address, wallet.chainId),
   removeUserWallet: (userId: string, address: string) => db.remove(address),
