@@ -10,6 +10,7 @@ import logger from "jet-logger";
 import { CustomError } from "@shared/errors";
 
 import cors from "cors";
+import { setUser } from "@middleware/setUser";
 
 const app = express();
 
@@ -29,7 +30,7 @@ const corsOptions = {
 };
 
 // Add api router
-app.use("/api", cors(corsOptions), apiRouter);
+app.use("/api", cors(corsOptions), setUser, apiRouter);
 
 // Error handling
 app.use(

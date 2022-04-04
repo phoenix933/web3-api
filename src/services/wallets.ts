@@ -28,4 +28,17 @@ function initDatabase() {
   };
 }
 
-export const walletsService = initDatabase();
+const db = initDatabase();
+
+interface Wallet {
+  address: string;
+  chainId: number;
+}
+
+// Ignore the userId as it is a mock
+export const walletsService = {
+  getUserWallets: (userId: string) => db.getAll(),
+  addUserWallet: (userId: string, wallet: Wallet) =>
+    db.add(wallet.address, wallet.chainId),
+  removeUserWallet: (userId: string, address: string) => db.remove(address),
+};

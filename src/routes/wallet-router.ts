@@ -9,13 +9,16 @@ const router = Router();
 // All of these endpoints should perform operations per user.
 
 router.get("/", async (req: Request, res: Response) => {
+  const { userId } = res.locals;
+
   // Get wallets for user
-  const wallets = walletsService.getAll();
+  const wallets = walletsService.getUserWallets(userId);
 
   return res.status(200).json({ wallets });
 });
 
 router.post("/:address", async (req: Request, res: Response) => {
+  const { userId } = res.locals;
   const { address } = req.params;
   const { signature, chainId, message } = req.body;
 
@@ -34,17 +37,18 @@ router.post("/:address", async (req: Request, res: Response) => {
 
   if (valid) {
     // Save wallet to user's wallets
-    walletsService.add(address, chainId);
+    walletsService.addUserWallet(userId, { address, chainId });
   }
 
   return res.status(200).json({ valid });
 });
 
 router.delete("/:address", async (req: Request, res: Response) => {
+  const { userId } = res.locals;
   const { address } = req.params;
 
   // Remove wallet from user's wallets
-  walletsService.remove(address);
+  walletsService.removeUserWallet(userId, address);
 
   return res.status(200).json({ success: true });
 });
