@@ -1,5 +1,7 @@
 import type { ChainData } from "@models/ChainData";
 
+export const OPENSEA_API_URL = "https://testnets-api.opensea.io/api/v1";
+
 export const SUPPORTED_CHAINS: ChainData[] = [
   {
     name: "Ethereum Mainnet",

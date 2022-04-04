@@ -1,8 +1,7 @@
+import { OPENSEA_API_URL } from "@shared/constants";
 import { Request, Response, Router } from "express";
 import axios from "axios";
 import { wait } from "@utils/wait";
-
-const API_URL = "https://testnets-api.opensea.io/api/v1";
 
 const router = Router();
 
@@ -11,7 +10,7 @@ router.get(
   async (req: Request, res: Response) => {
     const { contractAddress, tokenId } = req.params;
 
-    const url = `${API_URL}/asset/${contractAddress}/${tokenId}`;
+    const url = `${OPENSEA_API_URL}/asset/${contractAddress}/${tokenId}`;
 
     // Prevent OpenSea's Testnet API's from throwing a "Too many requests" error
     await wait(500);
@@ -25,7 +24,7 @@ router.get(
 router.get("/", async (req: Request, res: Response) => {
   const { collection } = req.query;
 
-  const url = `${API_URL}/assets?collection=${collection}`;
+  const url = `${OPENSEA_API_URL}/assets?collection=${collection}`;
 
   // Prevent OpenSea's Testnet API's from throwing a "Too many requests" error
   await wait(1000);
