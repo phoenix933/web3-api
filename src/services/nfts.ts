@@ -29,11 +29,14 @@ function initService() {
 
   return {
     getOne: async (contractAddress: string, tokenId: string, user: User) => {
-      const url = `/asset/${contractAddress}/${tokenId}`;
+      const { data: asset } = await openSeaApi.get(
+        `/asset/${contractAddress}/${tokenId}`
+      );
+      const {
+        data: { listings },
+      } = await openSeaApi.get(`/asset/${contractAddress}/${tokenId}/listings`);
 
-      const { data: asset } = await openSeaApi.get(url);
-
-      return formatAsset(asset, user);
+      return formatAsset({ ...asset, listings }, user);
     },
     getAllForCollection: async (collection: string, user: User) => {
       const url = `/assets?collection=${collection}`;
